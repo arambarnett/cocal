@@ -1,7 +1,7 @@
 ########### Python 2.7 #############
 
-import httplib, urllib, base64, requests
-
+import requests
+import http.client
 
 
 headers = {
@@ -9,15 +9,19 @@ headers = {
     'TRN-Api-Key': '4fbe2f49-1452-4167-8bd1-65ab373dcdb5',
 }
 
-
+"""
 params = {'platform': 'psn',
           'player_id': 'zRotation'}
+"""
 
+platform = 'gamepad'
+player_id = 'zRotation'
 
 def url():
     try:
-        conn = httplib.HTTPSConnection('api.fortnitetracker.com')
-        conn.request("GET", "/v1/profile/{1}/{0}".format(*params.values()), 'body', headers=headers)
+        print(f'Platform: {platform} \n Player: {player_id}')
+        conn = http.client.HTTPSConnection('api.fortnitetracker.com')
+        conn.request("GET", "/v2/profile/{platform}/{player_id}", 'body', headers=headers)
         response = conn.getresponse()
         data = response.read()
         print(data)
@@ -28,22 +32,12 @@ def url():
 
 
 
-####################################
 
 
-
-"""
 def req():
     try:
-        r = requests.get('https://public-api.tracker.gg/v2/overwatch/standard/profile/{1}/{0}'.format(*params.values()), headers)
+        r = requests.get(f'https://api.fortnitetracker.com/v1/profile/{platform}/{player_id}', headers)
         print(r.status_code)
         print(r.content)
     except Exception as e:
         print(e)
-
-
-"""
-params2 = urllib.urlencode({
-    # Request parameters
-    'seasonId': '{string}',
-})

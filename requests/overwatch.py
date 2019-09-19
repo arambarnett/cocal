@@ -11,7 +11,7 @@ headers = {
 
 
 params = {'platform': 'psn',
-          'player_id': 'SoraHeartly'}
+          'player_id': 'elkna'}
 
 
 """
@@ -31,16 +31,18 @@ params2 = urllib.urlencode({
     'seasonId': '{string}',
 })
 """
-
-try:
-    conn = httplib.HTTPSConnection('public-api.tracker.gg')
-    conn.request("GET", "/v2/overwatch/standard/profile/{1}/{0}".format(*params.values()), 'body', headers=headers)
-    response = conn.getresponse()
-    data = response.read()
-    print(data)
-    conn.close()
-except Exception as e:
-    print(e)
-        #print("[Errno {0}] {1}".format(e.errno, e.strerror))
+def req():
+    try:
+        conn = httplib.HTTPSConnection('public-api.tracker.gg')
+        conn.request("GET", "/v2/overwatch/standard/profile/{1}/{0}".format(*params.values()), 'body', headers=headers)
+        response = conn.getresponse()
+        if response.status >= 200 & response.status < 400:
+            data = response.read()
+            print(data)
+            conn.close()
+            return response
+    except Exception as e:
+        print(e)
+            #print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 ####################################
