@@ -1,5 +1,6 @@
 import requests
-
+import asyncio
+import r6sapi as api
 
 
 class Api:
@@ -30,6 +31,26 @@ class Api:
             return True
         else:
             return False
+
+
+
+
+class R6:
+    def __init__(self):
+        self.fake = None
+
+    def a(self):
+        async def run():
+            auth = api.Auth("chris.lewis831@gmail.com", "e2Z2#RRfL@pYPx.")
+            
+            player = await auth.get_player("billy_yoyo", api.Platforms.UPLAY)
+            operator = await player.get_operator("sledge")
+            print(operator.kills)
+
+            await auth.close()
+            
+        asyncio.get_event_loop().run_until_complete(run())
+        
 
 
 class Overwatch:
